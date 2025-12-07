@@ -1,10 +1,15 @@
 import React from "react";
+import { Route, Routes } from "react-router-dom";
+import LandingPage from "./pages/LandingPage";
+import UserProvider from "./context/UserContext";
 
 const App = () => {
   return (
-    <div>
-      <h1 class="text-3xl font-bold underline">Hello world!</h1>
-    </div>
+    <UserProvider>
+      <Routes>
+        <Route path="/" element={<LandingPage />}></Route>
+      </Routes>
+    </UserProvider>
   );
 };
 
