@@ -1,8 +1,16 @@
 import { useNavigate } from "react-router-dom";
 import { UserContext } from "../context/UserContext";
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { cardStyles } from "../assets/dummystyle";
-import { Award, Clock, Trash2, TrendingUp, Zap } from "lucide-react";
+import {
+  Award,
+  Check,
+  Clock,
+  Edit,
+  Trash2,
+  TrendingUp,
+  Zap,
+} from "lucide-react";
 
 export const ProfileInfoCard = () => {
   const navigate = useNavigate();
@@ -11,7 +19,7 @@ export const ProfileInfoCard = () => {
   const handleLogout = () => {
     localStorage.clear();
     clearUser();
-    navigate("/");
+    navigate("./"); // add ./
   };
 
   return (
@@ -19,12 +27,12 @@ export const ProfileInfoCard = () => {
       <div className={cardStyles.profileCard}>
         <div className={cardStyles.profileInitialsContainer}>
           <span className={cardStyles.profileInitialsText}>
-            {user.data.name ? user.data.name.charAt(0).toUpperCase() : ""}
+            {user?.data?.name ? user?.data?.name?.charAt(0).toUpperCase() : ""}
           </span>
         </div>
 
         <div>
-          <div className={cardStyles.profileName}>{user.data.name || ""}</div>
+          <div className={cardStyles.profileName}>{user?.data?.name || ""}</div>
           <button className={cardStyles.logoutButton} onClick={handleLogout}>
             Logout
           </button>
@@ -211,6 +219,51 @@ export const ResumeSummaryCard = ({
           </span>
         </div>
       </div>
+    </div>
+  );
+};
+
+// template card component
+export const TemplateCard = ({ thumbnailImg, isSelected, onSelect }) => {
+  return (
+    <div
+      className={`group h-auto md:h-[300px] lg:h-[320px] flex flex-col bg-white border-2 overflow-hidden cursor-pointer transition-all duration-300 hover:scale-105 hover:shadow-lg rounded-3xl ${
+        isSelected
+          ? "border-gray-200 hover:border-violet-500 shadow-violet-500/20 bg-violet-50"
+          : "border-gray-200 hover:border-violet-300 "
+      }  `}
+      onClick={onSelect}
+    >
+      {thumbnailImg ? (
+        <div>
+          <img
+            src={thumbnailImg || "/placeholder.svg"}
+            alt="Template"
+            className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
+          />
+          <div className="absolute inset-0 bg-gradient-to-t from-white/50 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+            {isSelected && (
+              <div className="absolute inset-0 bg-violet-500/10 flex items-center justify-center ">
+                <div className="w-16 h-16 bg-white backdrop-blur-sm rounded-full flex items-center justify-center shadow-lg animate-pulse">
+                  <Check size={16} className="text-violet-600" />
+                </div>
+              </div>
+            )}
+
+            {/* Hover Effect  */}
+            <div className="absolute inset-0 bg-gradient-to-t from-violet-100/30  to-transparent opacity-0 duration-300 group-hover:opacity-100 transition-opacity "></div>
+          </div>
+        </div>
+      ) : (
+        <div className="w-full h-full flex flex-col items-center justify-center gap-4 p-4">
+          <div className="w-16 h-16 bg-gray-200 rounded-full flex items-center justify-center">
+            <Edit size={28} className="text-gray-400" />
+          </div>
+          <span className="text-gray-500 text-center">
+            No Preview Available
+          </span>
+        </div>
+      )}
     </div>
   );
 };

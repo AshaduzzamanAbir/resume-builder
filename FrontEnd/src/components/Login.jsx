@@ -1,12 +1,12 @@
 import React, { useState, useContext } from "react";
 import { API_PATHS } from "../utils/apiPaths";
-import { isValidEmail } from "../utils/helper";
 import { UserContext } from "../context/UserContext";
 import { useNavigate } from "react-router-dom";
 
 import { authStyles as styles } from "../assets/dummystyle";
 import axiosInstance from "../utils/axiosInstance";
 import { Input } from "./Input";
+import { validateEmail } from "../utils/helper";
 
 const Login = ({ setCurrentPage }) => {
   const [email, setEmail] = useState("");
@@ -19,7 +19,7 @@ const Login = ({ setCurrentPage }) => {
   const handleLogin = async (e) => {
     e.preventDefault();
     // Login logic here
-    if (!isValidEmail(email)) {
+    if (!validateEmail(email)) {
       setError("Please enter a valid email address");
       return;
     }

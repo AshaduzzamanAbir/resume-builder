@@ -2,10 +2,11 @@ import React, { useContext, useState } from "react";
 import { authStyles as styles } from "../assets/dummystyle";
 import { UserContext } from "../context/UserContext";
 import { useNavigate } from "react-router-dom";
-import { isValidEmail } from "../utils/helper";
+// import { isValidEmail } from "../utils/helper";
 import axiosInstance from "../utils/axiosInstance";
 import { API_PATHS } from "../utils/apiPaths";
 import { Input } from "./Input";
+import { validateEmail } from "../utils/helper";
 
 export const SingUp = ({ setCurrentPage }) => {
   const [fullName, setFullName] = useState("");
@@ -23,12 +24,12 @@ export const SingUp = ({ setCurrentPage }) => {
       setError("Full name is required");
       return;
     }
-    if (!isValidEmail(email)) {
+    if (!validateEmail(email)) {
       setError("Please enter a valid email address");
       return;
     }
     if (!password) {
-      setError("Plwase enter a valid password");
+      setError("Please enter a valid password");
       return;
     }
     setError("");

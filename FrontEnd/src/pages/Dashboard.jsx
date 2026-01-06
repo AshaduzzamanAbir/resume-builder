@@ -14,7 +14,7 @@ import CreateResumeForm from "../components/CreateResumeForm";
 
 const Dashboard = () => {
   const navigate = useNavigate();
-  const [openCreateModal, setOpenCreateModal] = useState([]);
+  const [openCreateModal, setOpenCreateModal] = useState(false); // []
   const [allResumes, setAllResumes] = useState([]);
 
   const [loading, setLoading] = useState(true);
@@ -105,8 +105,9 @@ const Dashboard = () => {
         ...resume,
         completion: calculateCompletion(resume),
       }));
-      console.log(resumesWithCompletion);
+      // console.log(resumesWithCompletion);
       setAllResumes(resumesWithCompletion);
+      return resumesWithCompletion;
     } catch (error) {
       console.error("Error fetching resumes:", error);
     } finally {
@@ -129,7 +130,7 @@ const Dashboard = () => {
       toast.error("Failed to delete resume");
     } finally {
       setResumeToDelete(null);
-      showDeleteConfirmation(false);
+      setShowDeleteConfirmation(false);
     }
   };
 
@@ -153,7 +154,7 @@ const Dashboard = () => {
             </p>
           </div>
 
-          <div className="flex gap-4">
+          <div className="flex gap-4 ">
             <button
               className={styles.createButton}
               onClick={() => setOpenCreateModal(true)}
@@ -236,14 +237,14 @@ const Dashboard = () => {
         hideHeader
         maxWidth="max-w-2xl"
       >
-        <div className={styles.modalHeader}>
+        <div className={`${styles.modalHeader} p-4`}>
           <h3 className={styles.modalTitle}>Create New Resume</h3>
-          <button
+          {/* <button
             onClick={() => setOpenCreateModal(false)}
             className={styles.modalCloseButton}
           >
             X
-          </button>
+          </button> */}
         </div>
         <CreateResumeForm
           onSuccess={() => {

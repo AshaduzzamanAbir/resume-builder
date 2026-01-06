@@ -18,11 +18,12 @@ const CreateResumeForm = () => {
     setError("");
 
     try {
-      const response = await axiosInstance.get(API_PATHS.RESUME.CREATE, {
+      const response = await axiosInstance.post(API_PATHS.RESUME.CREATE, {
         title,
       });
-      if (response.data?._id) {
-        navigate(`/resume/${response.data?._id}`);
+      console.log();
+      if (response.data.newResume?._id) {
+        navigate(`/resume/${response.data?.newResume._id}`);
       }
     } catch (error) {
       if (
@@ -44,18 +45,19 @@ const CreateResumeForm = () => {
         Give a Title for your Resume, Also You can Change Every Thing later
         anytime.{" "}
       </p>
-      <form action="" onSubmit={handleCreateResume}>
+      <form onSubmit={handleCreateResume}>
         <Input
           type="text"
           value={title}
           onChange={(e) => setTitle(e.target.value)}
           placeholder="Enter resume title"
-          className="w-full px-4 py-2 border border-gray-300 rounded-md mb-4 focus:outline-none focus:ring-2 focus:ring-blue-500"
+          label="Resume Title"
+          className="w-full px-4 py-2 border border-gray-300 rounded-md mb-4 focus:outline-none focus:ring-2 focus:ring-blue-500 outline-none active:border-0 border-none focus:border-none"
         />
         {error && <p className="text-red-500 mb-4">{error}</p>}
         <button
           type="submit"
-          className="w-full bg-gradient-to-r from-rose-500 to-pink-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 transition duration-300"
+          className="w-full bg-gradient-to-r from-rose-500 to-pink-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 hover:scale-105 active:scale-95 hover:shadow-rose-500 transition duration-300"
         >
           Create Resume
         </button>
